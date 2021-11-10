@@ -6,8 +6,8 @@ namespace SQL_Project1_JosefinPersson
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            // testtesttesttest   till dev
+            Menu menu = new(); // instansierar menyn
+            menu.mainMenu(); // kör mainmenu .......... dubbelkolla senare......
         }
     }
 }
