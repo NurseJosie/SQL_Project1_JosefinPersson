@@ -8,7 +8,7 @@ namespace SQL_Project1_JosefinPersson
     {
         //-------printmetod---------
 
-        private static void PrintRow(DataTable dt)  // print metod.....
+        public static void PrintRow(DataTable dt)  // print metod.....
         {
             foreach (DataRow row in dt.Rows)
             {
@@ -22,7 +22,7 @@ namespace SQL_Project1_JosefinPersson
 
         // ---------GETDATATABLE-------------
 
-        private static DataTable GetDataTable(string sql, string paramName, string paramValue)
+        public static DataTable GetDataTable(string sql, string paramName, string paramValue)
         {
             //defienerar connection string
             var connString = "server=(localdb)\\mssqllocaldb;integrated security=true;database=MOCK_DATA";

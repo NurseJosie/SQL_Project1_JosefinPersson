@@ -18,8 +18,8 @@ namespace SQL_Project1_JosefinPersson
             var input = Console.ReadLine();
 
             var sql = "SELECT first_name, last_name FROM MOCK_DATA WHERE first_name LIKE @param";  //skriver param istället för input(säkrare, kan bli av med data annars), (sql injection..., drop datatable...)
-            var dt = GetDataTable(sql, "@param", "%" + input + "%");
-            PrintRow(dt);
+            var dt = Helper.GetDataTable(sql, "@param", "%" + input + "%");
+            Helper.PrintRow(dt);
 
             // ska läggas in i metoder/ i switchen för respektive fråga
 
