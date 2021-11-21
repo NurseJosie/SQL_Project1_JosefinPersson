@@ -12,66 +12,99 @@ namespace SQL_Project1_JosefinPersson
 
             while (run)
             {
-                Console.WriteLine("Ange ett nummeralternativ för att få svar på frågor om databasen...");
+                Console.WriteLine("Ange ett nummeralternativ för att få svar på frågor om människorna i tabellen!");
+                Console.WriteLine("------------------------------------------------------------------------------");
                 Console.WriteLine("1) Hur många länder finns representerade?");
                 Console.WriteLine("2) Är alla username och password unika?");
                 Console.WriteLine("3) Hur många är från Norden respektive Skandinavien?");
                 Console.WriteLine("4) Vilket är det vanligaste landet?");
-                Console.WriteLine("5) Lista de 10 första användarna vars förnamn börjar på bokstaven L.");
+                Console.WriteLine("5) Lista de 10 första användarna vars efternamn börjar på bokstaven L.");
                 Console.WriteLine("6) Visa alla användare vars för- och efternamn har samma begynnelsebokstav.");
-                Console.WriteLine("7) Exit");
+                Console.WriteLine("------------------------------------------------------------------------------");
+                Console.WriteLine("7) Avsluta programmet");
 
                 string userInput = Console.ReadLine();
                 int input = 0;
                 int.TryParse(userInput, out input);
 
+                var sql = ""; 
+                
                 switch (input)
                 {
                     case 1:
-                        //SELECT COUNT(DISTINCT country)
-                        //FROM MOCK_DATA
-                                                                //svar: 122
+                        sql = "SELECT COUNT(DISTINCT country) FROM MOCK_DATA";  
+                        var dt = Helper.GetDataTable(sql);                                                                  // ???
 
+                        Helper.PrintRow(dt);
+
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
-                    case 2:
-                        //SELECT*
-                        //FROM MOCK_DATA
-                        //WHERE password = username                    inget lösen är detsamma som användarnamnet
+                    case 2:                                                                 
+                        sql = "SELECT DISTINCT username FROM MOCK_DATA";
+                        dt = Helper.GetDataTable(sql);   // ???
 
-                        //SELECT DISTINCT password                     alla är unika
-                        //FROM MOCK_DATA
+                        if (dt.Rows.Count == 1000)
+                        {
+                            Console.WriteLine("Alla användarnamn är unika!");
+                        }
+                        else Console.WriteLine("Alla användarnamn är INTE unika!");
 
-                        //SELECT DISTINCT username                     alla är unika
-                        //FROM MOCK_DATA
+                        sql = "SELECT DISTINCT password FROM MOCK_DATA";
+                        dt = Helper.GetDataTable(sql);   // ???
 
-                                                          // rätt? hur ska man visa resultatet?
+                        if (dt.Rows.Count == 1000)
+                        {
+                            Console.WriteLine("Alla lösenord är unika!");
+                        }
+                        else Console.WriteLine("Alla lösenord är INTE unika!");
 
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
-                    case 3:
-                        //('Sweden', 'Denmark', 'Finland', 'Norway', 'Iceland', 'Greenland', 'Faroe Islands', 'Åland Islands') = norden
-                        //('Sweden', 'Denmark', 'Norway') = skandinavien
+                    case 3:                                                                       // krashar!!!!!
+                        Console.WriteLine("Tillhörande Norden:"); 
+                        sql = "SELECT COUNT(country) FROM MOCK_DATA WHERE country = 'Sweden' OR country = 'Denmark' OR country = 'Finland' OR country = 'Norway' OR country = 'Iceland' OR country = 'Greenland' OR country = 'Faroe Islands' OR country = 'Åland Islands'";
+                        dt = Helper.GetDataTable(sql);   // ???
 
-                        //SELECT COUNT(country)            hur många som är från ETT visst land..... 
-                        //FROM MOCK_DATA
-                        //WHERE country = 'Sweden'
+                        Helper.PrintRow(dt);
 
+                        Console.WriteLine("Tillhörande Skandinavien:");
+                        sql = "SELECT COUNT(country) FROM MOCK_DATA WHERE country IN ( 'Sweden', 'Denmark', 'Norway' )";
+                        dt = Helper.GetDataTable(sql);   // ???
+
+                        Helper.PrintRow(dt);
+
+
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
-                    case 4:
-                        //SELECT country, COUNT(country) AS value_occurrence                                    funkar ej!!! fattar inte...
-                        //FROM MOCK_DATA GROUP BY country ORDER BY value_occurrence DESC LIMIT 1;
+                    case 4:                                                                       // funkar ej!!!
+                        sql = "SELECT TOP 1 country, COUNT(country) AS value_occurrence FROM MOCK_DATA GROUP BY country ORDER BY value_occurrence DESC;";
+                        dt = Helper.GetDataTable(sql);   // ???
+
+                        Helper.PrintRow(dt);
+
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case 5:
-                        //SELECT top 10 last_name
-                        //FROM MOCK_DATA
-                        //WHERE last_name LIKE 'L%'
+                        sql = "SELECT top 10 last_name FROM MOCK_DATA WHERE last_name LIKE @param";
+                        dt = Helper.GetDataTable(sql, "@param", "L%");   // ???
 
+                        Helper.PrintRow(dt);
+
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case 6:
-                        //SELECT * 
-                        //FROM MOCK_DATA
-                        //WHERE UPPER(LEFT(first_name, 1)) = UPPER(LEFT(last_name, 1))
+                        sql = "SELECT first_name, last_name FROM MOCK_DATA WHERE UPPER(LEFT(first_name, 1)) = UPPER(LEFT(last_name, 1))";
+                        dt = Helper.GetDataTable(sql);   // ???
 
+                        Helper.PrintRow(dt);
 
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case 7:
                         run = false;

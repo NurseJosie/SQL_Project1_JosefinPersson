@@ -4,11 +4,9 @@ using System.Data.SqlClient;
 
 namespace SQL_Project1_JosefinPersson
 {
-    class Helper     
+    class Helper
     {
-        //-------printmetod---------
-
-        public static void PrintRow(DataTable dt)  // print metod.....
+        public static void PrintRow(DataTable dt)  // Print-metod
         {
             foreach (DataRow row in dt.Rows)
             {
@@ -16,57 +14,36 @@ namespace SQL_Project1_JosefinPersson
                 {
                     Console.WriteLine(row[i] + " ");
                 }
-                Console.WriteLine();  // varför?
+                Console.WriteLine(); 
             }
         }
 
-        // ---------GETDATATABLE-------------
-
-        public static DataTable GetDataTable(string sql, string paramName, string paramValue)
+        public static DataTable GetDataTable(string sql, string paramName = "", string paramValue = "")    
         {
-            //defienerar connection string
-            var connString = "server=(localdb)\\mssqllocaldb;integrated security=true;database=MOCK_DATA";
-            // skapa data table
+            //Defienerar connection-string
+            var connString = "server=(localdb)\\mssqllocaldb;integrated security=true;database=Project1_OOA";
+            //Skapar data-table
             var dt = new DataTable();
-            //förbered koppling till databasen
+            //Förbereder koppling till databasen
             using (var connection = new SqlConnection(connString))
             {
-                // öppna koppling till databasen
+                //Öppnar koppling till databasen
                 connection.Open();
-                //förbered kommando
+                //Förbereder kommando
                 using (var command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue(paramName, paramValue);
-                    // förbered en adapter
+                    //Förbereder en adapter
                     using (var adapter = new SqlDataAdapter(command))
                     {
-                        //kopierar databasdata till datatable
+                        //Kopierar databasdata till data-table
                         adapter.Fill(dt);
                     }
                 }
-            } // här förstörs kopplingen till databasen, skyddar databasen
+            } //Här förstörs kopplingen till databasen, skyddar databasen
 
             return dt;
         }
-        // ---------------annan metod, om man inte vill returnera något...--------------
-        private static void ExecuteSQL(string sql, string paramName, string paramValue)
-        {
-            //defienerar connection string
-            var connString = "server=(localdb)\\mssqllocaldb;integrated security=true;database=MOCK_DATA";
-            // skapa data table
-            var dt = new DataTable();
-            //förbered koppling till databasen
-            using (var connection = new SqlConnection(connString))
-            {
-                // öppna koppling till databasen
-                connection.Open();
-                //förbered kommando
-                using (var command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue(paramName, paramValue);
-                    command.ExecuteNonQuery();
-                }
-            } // här förstörs kopplingen till databasen, skyddar databasen
-        }
+
     }
 }
