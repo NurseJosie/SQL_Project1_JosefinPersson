@@ -14,7 +14,6 @@ namespace SQL_Project1_JosefinPersson
                 {
                     Console.WriteLine(row[i] + " ");
                 }
-                Console.WriteLine(); 
             }
         }
 
@@ -44,6 +43,5 @@ namespace SQL_Project1_JosefinPersson
 
             return dt;
         }
-
     }
 }

@@ -27,13 +27,13 @@ namespace SQL_Project1_JosefinPersson
                 int input = 0;
                 int.TryParse(userInput, out input);
 
-                var sql = ""; 
+                var sql = "";
                 
                 switch (input)
                 {
                     case 1:
                         sql = "SELECT COUNT(DISTINCT country) FROM MOCK_DATA";  
-                        var dt = Helper.GetDataTable(sql);                                                                  // ???
+                        var dt = Helper.GetDataTable(sql);  
 
                         Helper.PrintRow(dt);
 
@@ -42,7 +42,7 @@ namespace SQL_Project1_JosefinPersson
                         break;
                     case 2:                                                                 
                         sql = "SELECT DISTINCT username FROM MOCK_DATA";
-                        dt = Helper.GetDataTable(sql);   // ???
+                        dt = Helper.GetDataTable(sql); 
 
                         if (dt.Rows.Count == 1000)
                         {
@@ -51,7 +51,7 @@ namespace SQL_Project1_JosefinPersson
                         else Console.WriteLine("Alla användarnamn är INTE unika!");
 
                         sql = "SELECT DISTINCT password FROM MOCK_DATA";
-                        dt = Helper.GetDataTable(sql);   // ???
+                        dt = Helper.GetDataTable(sql);  
 
                         if (dt.Rows.Count == 1000)
                         {
@@ -62,26 +62,25 @@ namespace SQL_Project1_JosefinPersson
                         Console.ReadKey();
                         Console.Clear();
                         break;
-                    case 3:                                                                       // krashar!!!!!
+                    case 3:                                                               
                         Console.WriteLine("Tillhörande Norden:"); 
                         sql = "SELECT COUNT(country) FROM MOCK_DATA WHERE country = 'Sweden' OR country = 'Denmark' OR country = 'Finland' OR country = 'Norway' OR country = 'Iceland' OR country = 'Greenland' OR country = 'Faroe Islands' OR country = 'Åland Islands'";
-                        dt = Helper.GetDataTable(sql);   // ???
+                        dt = Helper.GetDataTable(sql);  
 
                         Helper.PrintRow(dt);
 
                         Console.WriteLine("Tillhörande Skandinavien:");
-                        sql = "SELECT COUNT(country) FROM MOCK_DATA WHERE country IN ( 'Sweden', 'Denmark', 'Norway' )";
-                        dt = Helper.GetDataTable(sql);   // ???
+                        sql = "SELECT COUNT(country) FROM MOCK_DATA WHERE country = 'Sweden' OR country = 'Denmark' OR country = 'Norway'";
+                        dt = Helper.GetDataTable(sql);
 
                         Helper.PrintRow(dt);
-
 
                         Console.ReadKey();
                         Console.Clear();
                         break;
-                    case 4:                                                                       // funkar ej!!!
+                    case 4:                                                                   
                         sql = "SELECT TOP 1 country, COUNT(country) AS value_occurrence FROM MOCK_DATA GROUP BY country ORDER BY value_occurrence DESC;";
-                        dt = Helper.GetDataTable(sql);   // ???
+                        dt = Helper.GetDataTable(sql);   
 
                         Helper.PrintRow(dt);
 
@@ -90,7 +89,9 @@ namespace SQL_Project1_JosefinPersson
                         break;
                     case 5:
                         sql = "SELECT top 10 last_name FROM MOCK_DATA WHERE last_name LIKE @param";
-                        dt = Helper.GetDataTable(sql, "@param", "L%");   // ???
+                        dt = Helper.GetDataTable(sql, "@param", "L%"); // Lade till en @param här. Osäker på om jag kanske borde gjort det på alla SQL-strängar för security?
+                                                                       // Bestämde mig för att inte göra det då programmet utgörs av redan färdiga frågor
+                                                                       // och därför inte kommer ta emot en eventuellt skadlig input från användaren(?).
 
                         Helper.PrintRow(dt);
 
@@ -99,7 +100,7 @@ namespace SQL_Project1_JosefinPersson
                         break;
                     case 6:
                         sql = "SELECT first_name, last_name FROM MOCK_DATA WHERE UPPER(LEFT(first_name, 1)) = UPPER(LEFT(last_name, 1))";
-                        dt = Helper.GetDataTable(sql);   // ???
+                        dt = Helper.GetDataTable(sql);  
 
                         Helper.PrintRow(dt);
 
